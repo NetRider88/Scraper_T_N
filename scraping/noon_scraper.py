@@ -1,8 +1,9 @@
 # scraping/noon_scraper.py
 
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,6 +11,16 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time
 import logging
 from .area_mapping import AreaMapping
+
+def setup_driver():
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    return driver
 
 def scrape_noon_food(area, max_pages=26):
     """
@@ -35,17 +46,9 @@ def scrape_noon_food(area, max_pages=26):
         
     logging.info(f"Searching for restaurants in: {area_name}")
     
-    options = webdriver.FirefoxOptions()
-    # Remove headless mode for testing
-    # options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--window-size=1920,1080')
-    options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
-    
     try:
-        driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
-        wait = WebDriverWait(driver, 30)
+        driver = setup_driver()
+        wait = WebDriverWait(driver, 10)
         
         # Load the main page
         logging.info("Loading main page...")

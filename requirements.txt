@@ -1,12 +1,8 @@
 streamlit
-requests
-beautifulsoup4
-selenium
 pandas
-rapidfuzz
-gspread
-oauth2client
-webdriver-manager
+selenium
+webdriver_manager
 openpyxl
 xlsxwriter
+chromedriver-autoinstaller
 
