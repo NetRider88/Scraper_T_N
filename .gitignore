@@ -1,0 +1,31 @@
+# Virtual Environment
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.py[cod]
+*$py.class
+
+# Credentials and Secrets
+google_sheets_credentials.json
+.env
+*.pem
+*.key
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
